@@ -9,3 +9,5 @@ output
 
 # Modelos
 model.png
+logs
+training_checkpoints

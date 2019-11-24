@@ -30,3 +30,4 @@ A continuación se muestra un ejemplo de la aproximación que se desea lograr.
 - `matplotlib`
 - `numpy`
 - `pydot`
+- `pillow`
