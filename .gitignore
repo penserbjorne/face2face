@@ -1,8 +1,11 @@
 # Del notebook
 .ipynb_checkpoints
 
-# Set de datos de las flores
+# Set de datos
 tagged
 tagged.tgz
 input
 output
+
+# Modelos
+model.png
