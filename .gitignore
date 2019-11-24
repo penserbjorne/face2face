@@ -1,0 +1,8 @@
+# Del notebook
+.ipynb_checkpoints
+
+# Set de datos de las flores
+tagged
+tagged.tgz
+input
+output

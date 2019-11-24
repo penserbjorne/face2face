@@ -23,3 +23,9 @@ A continuación se muestra un ejemplo de la aproximación que se desea lograr.
   - Aguilar Enriquez, Paul Sebastian
   - Padilla Herrera Carlos Ignacio
   - Ramírez Ancona Simón Eduardo
+
+## Requerimientos
+
+- `tensorflow-gpu`
+- `matplotlib`
+- `numpy`
