@@ -2,10 +2,10 @@
 .ipynb_checkpoints
 
 # Set de datos
-tagged
-tagged.tgz
-input
+tagged*
+input*
 output*
+video*
 
 # Modelos
 model.png

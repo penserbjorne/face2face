@@ -31,6 +31,7 @@ A continuación se muestra un ejemplo de la aproximación que se desea lograr.
 - `numpy`
 - `pydot`
 - `pillow`
+- `opencv`
 
 ## Referencias
 
