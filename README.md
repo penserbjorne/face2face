@@ -31,3 +31,11 @@ A continuación se muestra un ejemplo de la aproximación que se desea lograr.
 - `numpy`
 - `pydot`
 - `pillow`
+
+## Referencias
+
+- [Site: Image-to-Image Translation with Conditional Adversarial Nets](https://phillipi.github.io/pix2pix/)
+- [Generando FLORES realistas con IA - Pix2Pix | IA NOTEBOOK #5](https://www.youtube.com/watch?v=YsrMGcgfETY)
+- [Pix2Pix con TensorFlow](https://www.tensorflow.org/tutorials/generative/pix2pix)
+- [Edge to Artworks translation with Pix2Pix model. ](https://github.com/gallardorafael/edge2art)
+- [Proyecto DeepFake que busca crear en ultima instancia caras falsas usando landmarks del controlador o entrada de texto ](https://github.com/RonyBenitez/mimix)
