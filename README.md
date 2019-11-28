@@ -35,6 +35,11 @@ A continuación se muestra un ejemplo de la aproximación que se desea lograr.
 - `opencv`
 - `dlib`
 
+## Instrucciones
+
+El preprocesamiento se realiza con `python=3.5.6` y la parte de pix2pix con
+`python=3.7.5`.
+
 ## Referencias
 
 - [Site: Image-to-Image Translation with Conditional Adversarial Nets](https://phillipi.github.io/pix2pix/)
@@ -46,3 +51,5 @@ A continuación se muestra un ejemplo de la aproximación que se desea lograr.
 - [Open Source Computer Vision Library](https://github.com/opencv/opencv/tree/master/samples/dnn/face_detector)
 - [Face detection using OpenCV and Dlib - A Comparison ](https://github.com/arunponnusamy/face-detection-comparison)
 - [computer_vision/CAFFE_DNN](https://github.com/thegopieffect/computer_vision/tree/master/CAFFE_DNN)
+- [Training alternative Dlib Shape Predictor models using Python](https://medium.com/datadriveninvestor/training-alternative-dlib-shape-predictor-models-using-python-d1d8f8bd9f5c)
+- [ Trained model files for dlib example programs](https://github.com/davisking/dlib-models)
