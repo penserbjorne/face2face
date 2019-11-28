@@ -26,12 +26,14 @@ A continuación se muestra un ejemplo de la aproximación que se desea lograr.
 
 ## Requerimientos
 
+- `python=3.5.6`
 - `tensorflow-gpu`
 - `matplotlib`
 - `numpy`
 - `pydot`
 - `pillow`
 - `opencv`
+- `dlib`
 
 ## Referencias
 
@@ -40,3 +42,7 @@ A continuación se muestra un ejemplo de la aproximación que se desea lograr.
 - [Pix2Pix con TensorFlow](https://www.tensorflow.org/tutorials/generative/pix2pix)
 - [Edge to Artworks translation with Pix2Pix model. ](https://github.com/gallardorafael/edge2art)
 - [Proyecto DeepFake que busca crear en ultima instancia caras falsas usando landmarks del controlador o entrada de texto ](https://github.com/RonyBenitez/mimix)
+- [Face detection with OpenCV and deep learning](https://www.pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/#post_downloads)
+- [Open Source Computer Vision Library](https://github.com/opencv/opencv/tree/master/samples/dnn/face_detector)
+- [Face detection using OpenCV and Dlib - A Comparison ](https://github.com/arunponnusamy/face-detection-comparison)
+- [computer_vision/CAFFE_DNN](https://github.com/thegopieffect/computer_vision/tree/master/CAFFE_DNN)
