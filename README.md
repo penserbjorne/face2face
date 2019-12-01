@@ -59,15 +59,15 @@ facial, calibración de cámaras, visión estérea y visión robótica.
 
 Desde su versión 3.3, OpenCV cuenta con funciones de
 **detección de rostros basado en aprendizaje profundo**. Estas funciones
-pertenecen al modulo de **redes neuronales profundas (dnn)**.
+pertenecen al módulo de **redes neuronales profundas (dnn)**.
 
-El modulo de dnn incluye soporte para Caffe, TensorWlof y Torch/PyTorch. Su
+El módulo de dnn incluye soporte para Caffe, TensorWlof y Torch/PyTorch. Su
 principal contribuidor es **Aleksandr Rybnikov**.
 
-Para utilizar las funciones de detección de rostros del modulo dnn se requieren
+Para utilizar las funciones de detección de rostros del módulo dnn se requieren
 los archivos correspondientes con el modelo y los pesos del mismo.
 
-En el caso de un un modelo con modulos para Caffe, se requieren:
+En el caso de un un modelo con módulos para Caffe, se requieren:
 
 - Archivo **.prototxt** que define la **arquitectura del modelo**.
 - Archivo **.caffemodel** que contiene los **pesos** para las capas del modelo.
@@ -79,14 +79,14 @@ Detector (Detector de disparo único), SSD, con una red base de ResNet**.
 
 <img src="./imgs/12_deep_learning_face_detection_opencv.gif" alt="./imgs/12_deep_learning_face_detection_opencv.gif" height="300"/>
 
-Detección de rostro con el modulo DNN de OpenCV.
+Detección de rostro con el módulo DNN de OpenCV.
 
 </div>
 
 
 ### Segmentación de rostros con OpenCV y Dlib
 
-**Dlib es una biblioteca de aprendizaje automático** escrita en C ++.
+**Dlib es una biblioteca de aprendizaje automático** escrita en C++.
 Implementa una amplia gama de algoritmos que se pueden usar en plataformas de
 escritorio y móviles.
 
@@ -306,22 +306,26 @@ profundo que viene incluido en `OpenCV`. En esta parte se hace la detección del
 rostro en el frame, y la imagen se recorta a un formato de 256x256 con solamente
 el rostro en ella. La imagen se sigue almacenando en la carpeta de de imágenes
 taggeadas.
-- **Creación de mascaras de rostros a partir de los rostros detectados**: Se
+- **Creación de máscaras de rostros a partir de los rostros detectados**: Se
 utiliza la biblioteca `dlib` junto al algoritmo de detección de rostro basado en
 puntos. Se toman las imágenes taggeadas y de cada rostro se hace la detección
 de sus elementos correspondientes: base del rostro, ojos, cejas, nariz y boca.
-De los elementos detectados se genera una mascara con estos y un fondo negro.
+De los elementos detectados se genera una máscara con estos y un fondo negro.
 Estas imágenes se almacenan en una carpeta  a la cual se considera la carpeta de
 imágenes de entrada.
 
-| Frame extraido | Rostro detectado y recortado  | Mascara generada |
+<div align="center">
+
+| Frame extraido | Rostro detectado y recortado  | máscara generada |
 | - | - | - |
 | <img src="./imgs/13_01_frame.png" alt="./imgs/13_01_frame.png" height="300"/> | <img src="./imgs/13_02_rostro.png" alt="./imgs/13_02_rostro.png"/> | <img src="./imgs/13_03_mascara.png" alt="./imgs/13_03_mascara.png"/> |
 | <img src="./imgs/14_01_frame.png" alt="./imgs/14_01_frame.png" height="300"/> | <img src="./imgs/14_02_rostro.png" alt="./imgs/14_02_rostro.png"/> | <img src="./imgs/14_03_mascara.png" alt="./imgs/14_03_mascara.png"/> |
 
+</div>
+
 El preprocesamiento implementado tiene algunos errores, por lo cual hay que
 eliminar algunas imágenes a mano ya que no en todos los frames se logra detectar
-un rostro, por lo cual no se genera la mascara y hay que eliminarlos para que no
+un rostro, por lo cual no se genera la máscara y hay que eliminarlos para que no
 metan ruido a pix2pix.
 
 #### pix2pix
@@ -331,7 +335,7 @@ original. Se utilizo `TensorFlow2` como herramienta de desarrollo y se configur�
 para el uso de GPU.
 
 Para la definición del set datos se indican cuatro carpetas. Dos carpetas
-corresponden a las imágenes de entrada como mascaras, y dos corresponden a las
+corresponden a las imágenes de entrada como máscaras, y dos corresponden a las
 imágenes de entrada taggeadas o deseadas a generar (objetivo). Así como la
 carpeta de salida.
 
@@ -424,7 +428,7 @@ crear dos entornos de ejecución.
 
 #### pix2pix
 
-- `Jupyter Notebook 6.2`
+- `Jupyter Notebook 6.0.2`
 - `python=3.7.0`
 - `tensorflow-gpu`
 - `matplotlib`
@@ -443,6 +447,9 @@ entornos y el soporte a paquetes y bibliotecas.
 Se utilizaron como entrada dos videos. Uno del presidente **Andrés Manuel López
 Obrador en una de "Las mañaneras"**, y otro de la película **El caballero de la
 noche, de una escena del Joker**.
+
+- [AMLO revela cinco momentos dificiles de su gobierno](https://www.youtube.com/watch?v=BSc32rRlZdM)
+- [The Joker & Harvey Dent Two Face / Hospital Scene - The Dark Knight](https://www.youtube.com/watch?v=YEEsE8snXok)
 
 Se entreno la red con ambos set de datos como prueba y como entrenamiento.
 
@@ -468,12 +475,31 @@ entrenamiento fue de 3064.5590 segundos (51.07) minutos.
 
 <img src="./imgs/17_03_joker_amlo.png" alt="./imgs/17_03_joker_amlo.png"/>
 
-</div>
-
 | Imagen 1 | Imagen 2  | Imagen 3 |
 | - | - | - |
 | <img src="./imgs/18_01_amlo.gif" alt="./imgs/18_01_amlo.gif"/> | <img src="./imgs/18_02_amlo.gif" alt="./imgs/18_02_amlo.gif"/> | <img src="./imgs/18_03_amlo.gif" alt="./imgs/18_03_amlo.gif"/> |
 
+</div>
+
+### AMLO de entrenamiento, Joker de prueba
+
+La siguiente prueba también se realizo con un set de datos de 400 imágenes, 320
+de entrenamiento y 80 de prueba, y un total de 50 epocas. El tiempo que tardo el
+entrenamiento fue de 3658.7571 segundos (60.97) minutos.
+
+<div align="center">
+
+<img src="./imgs/19_01_amlo_joker.png" alt="./imgs/19_01_amlo_joker.png"/>
+
+<img src="./imgs/19_02_amlo_joker.png" alt="./imgs/19_02_amlo_joker.png"/>
+
+<img src="./imgs/19_03_amlo_joker.png" alt="./imgs/19_03_amlo_joker.png"/>
+
+| Imagen 1 | Imagen 2  | Imagen 3 |
+| - | - | - |
+| <img src="./imgs/20_01_joker.gif" alt="./imgs/20_01_joker.gif"/> | <img src="./imgs/20_02_joker.gif" alt="./imgs/20_02_joker.gif"/> | <img src="./imgs/20_03_joker.gif" alt="./imgs/20_03_joker.gif"/> |
+
+</div>
 
 ## Referencias
 
