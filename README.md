@@ -409,24 +409,70 @@ La arquitectura de la red queda de la siguiente manera:
 <br/><br/>
 </div>
 
-### Requerimientos
+### Requerimientos y Ejecución
+
+Debido a que `dlib` solamente funciona hasta `python=3.5.6` se tuvieron que
+crear dos entornos de ejecución.
+
+#### Preprocesamiento
 
 - `Jupyter Notebook 5.6`
 - `python=3.5.6`
+- `numpy`
+- `opencv`
+- `dlib`
+
+#### pix2pix
+
+- `Jupyter Notebook 6.2`
+- `python=3.7.0`
 - `tensorflow-gpu`
 - `matplotlib`
 - `numpy`
 - `pydot`
 - `pillow`
-- `opencv`
-- `dlib`
 
-### Ejecución
+#### Ejecución
 
-El preprocesamiento se realiza con `python=3.5.6` y la parte de pix2pix con
-`python=3.7.5`.
+Cada notebook se debe correr en su propio entorno con los requerimientos
+indicados. Se recomienda utilizar `Anaconda` por facilidad en la creación de
+entornos y el soporte a paquetes y bibliotecas.
 
 ## Resultados
+
+Se utilizaron como entrada dos videos. Uno del presidente **Andrés Manuel López
+Obrador en una de "Las mañaneras"**, y otro de la película **El caballero de la
+noche, de una escena del Joker**.
+
+Se entreno la red con ambos set de datos como prueba y como entrenamiento.
+
+Las pruebas se realizaron en un equipo:
+
+- Lenovo Legión Y-720
+- Sistema Operativo Ubuntu 18.04
+- 32 GB de RAM
+- Tarjeta gráfica GTX 1060 (6 GB de video dedicado)
+- Disco de estado solido
+
+### Joker de entrenamiento, AMLO de prueba
+
+La siguiente prueba se realizo con un set de datos de 400 imágenes, 320 de
+entrenamiento y 80 de prueba, y un total de 50 epocas. El tiempo que tardo el
+entrenamiento fue de 3064.5590 segundos (51.07) minutos.
+
+<div align="center">
+
+<img src="./imgs/17_01_joker_amlo.png" alt="./imgs/17_01_joker_amlo.png"/>
+
+<img src="./imgs/17_02_joker_amlo.png" alt="./imgs/17_02_joker_amlo.png"/>
+
+<img src="./imgs/17_03_joker_amlo.png" alt="./imgs/17_03_joker_amlo.png"/>
+
+</div>
+
+| Imagen 1 | Imagen 2  | Imagen 3 |
+| - | - | - |
+| <img src="./imgs/18_01_amlo.gif" alt="./imgs/18_01_amlo.gif"/> | <img src="./imgs/18_02_amlo.gif" alt="./imgs/18_02_amlo.gif"/> | <img src="./imgs/18_03_amlo.gif" alt="./imgs/18_03_amlo.gif"/> |
 
 
 ## Referencias
