@@ -36,7 +36,7 @@ redes de confrontación generativa (Generative Adversarial Networks, GANs).
 
 ![./imgs/01_deepfake_example.gif](./imgs/01_deepfake_example.gif)
 
-Fig 1: Un ejemplo de tecnología deepfake: la actriz Amy Adams en el original
+Un ejemplo de tecnología deepfake: la actriz Amy Adams en el original
 (izquierda) se modifica para tener la cara del actor Nicolas Cage (derecha)
 </div>
 
@@ -120,7 +120,8 @@ increíblemente rápido, de hecho, se necesitan entre 1 y 3 ms (en la plataforma
 de escritorio) para detectar (alinear) un conjunto de 68 puntos de referencia en
 una cara determinada.
 
-Existe un dataset para utilizar adecuadamente el predictor llamado **shape_predictor_68_face_landmarks**, el cual está entrenado en el conjunto de
+Existe un dataset para utilizar adecuadamente el predictor llamado
+**shape_predictor_68_face_landmarks**, el cual está entrenado en el conjunto de
 datos **[ibug 300-W](https://ibug.doc.ic.ac.uk/resources/facial-point-annotations/)**
 de **C. Sagonas, E. Antonakos, G, Tzimiropoulos, S. Zafeiriou, M. Pantic.**
 con 300 caras, y permite indicar mediante un conjunto de 68 puntos elementos
@@ -281,7 +282,132 @@ Ejemplo de resultados utilizando pix2pix.
 
 ## Desarrollo
 
+El desarrollo del proyecto esta dividido en dos notebooks de `Jupyter Notebook`.
+
+El primero es para el **preprocesamiento** y el segundo para la arquitectura de
+**pix2pix**.
+
 ### Implementación
+
+#### Preprocesamiento
+
+El preprocesamiento es para la creación del dataset Se parte de dos videos de
+entrada, uno que funcionara para la creación de imágenes de entrenamiento y otro
+para la creación de imágenes de prueba. A los videos se les aplican las
+siguientes funciones:
+
+- **Extracción de frames del video:** A través de la biblioteca de `OpenCV` se
+extraen los frames de este para ser almacenados como imágenes. Se puede indicar
+cada cuantos frames se almacena una imagen, esto se puede considerar un
+parámetro de muestreo. Los frames extraidos se almacenan en una carpeta a la
+cual podemos considerar la carpeta de imagenes taggeadas o deseadas a generar.
+- **Detección de rostros en los frames**: Se utiliza un modelo de aprendizaje
+profundo que viene incluido en `OpenCV`. En esta parte se hace la detección del
+rostro en el frame, y la imagen se recorta a un formato de 256x256 con solamente
+el rostro en ella. La imagen se sigue almacenando en la carpeta de de imágenes
+taggeadas.
+- **Creación de mascaras de rostros a partir de los rostros detectados**: Se
+utiliza la biblioteca `dlib` junto al algoritmo de detección de rostro basado en
+puntos. Se toman las imágenes taggeadas y de cada rostro se hace la detección
+de sus elementos correspondientes: base del rostro, ojos, cejas, nariz y boca.
+De los elementos detectados se genera una mascara con estos y un fondo negro.
+Estas imágenes se almacenan en una carpeta  a la cual se considera la carpeta de
+imágenes de entrada.
+
+| Frame extraido | Rostro detectado y recortado  | Mascara generada |
+| - | - | - |
+| <img src="./imgs/13_01_frame.png" alt="./imgs/13_01_frame.png" height="300"/> | <img src="./imgs/13_02_rostro.png" alt="./imgs/13_02_rostro.png"/> | <img src="./imgs/13_03_mascara.png" alt="./imgs/13_03_mascara.png"/> |
+| <img src="./imgs/14_01_frame.png" alt="./imgs/14_01_frame.png" height="300"/> | <img src="./imgs/14_02_rostro.png" alt="./imgs/14_02_rostro.png"/> | <img src="./imgs/14_03_mascara.png" alt="./imgs/14_03_mascara.png"/> |
+
+El preprocesamiento implementado tiene algunos errores, por lo cual hay que
+eliminar algunas imágenes a mano ya que no en todos los frames se logra detectar
+un rostro, por lo cual no se genera la mascara y hay que eliminarlos para que no
+metan ruido a pix2pix.
+
+#### pix2pix
+
+La arquitectura implementada es literalmente la propuesta en el paper de
+original. Se utilizo `TensorFlow2` como herramienta de desarrollo y se configuró
+para el uso de GPU.
+
+Para la definición del set datos se indican cuatro carpetas. Dos carpetas
+corresponden a las imágenes de entrada como mascaras, y dos corresponden a las
+imágenes de entrada taggeadas o deseadas a generar (objetivo). Así como la
+carpeta de salida.
+
+```python
+# Definimos carpetas donde se ubican las imagenes
+TAGPATHTRAIN = './tagged_train'
+INPATHTRAIN = './input_train'
+TAGPATHTEST = './tagged_test'
+INPATHTEST = './input_test'
+OUTPATH = './output'
+```
+
+Se especifica la cantidad de trabajos para trabajar y el porcentaje que se
+utilizara como entrenamiento.
+
+```python
+# Cantidad de imagenes con las que vamos a trabajar
+n = 400
+# Porcentaje de nuestro set a ser utilizado como entrenamiento
+train_percentage = 0.80
+```
+
+Como se mencionó, se implementa todo lo indicado en el paper:
+
+- Funciones procesamiento de imágenes
+  - Reescalado
+  - Normalización
+  - Random jitter
+- Carga de imágenes para entrenamiento y prueba
+- Bloques básicos para el generador y el discriminador
+  - downsample
+  - upsample
+- Generador
+- Discriminador
+- Funciones de costo del generador y del discriminador
+- Funciones de medición de rendimiento y carga de imágenes
+- Funciones de entrenamiento
+  - Pasos (Incluye el gradiente descendente)
+  - Entrenamiento general
+- Configuraciones para almacenamiento de checkpoints y optimización dentro de
+TensorFlow
+
+Todas estas funciones se utilizan de manera secuencial y se explica el flujo a
+continuación:
+
+- Se cargan los set de datos:
+  - Se normalizan a valores de [-1, 1].
+  - Se indica cual es el set de entrenamiento para que se le apliquen
+  operaciones de variación en las imágenes (reescalado, recorte aleatorio y
+    espejeo).
+  - Se indica cual es el set de prueba para que no se le apliquen operaciones de
+  variación en las imágenes.
+- Se crea el generador y el discriminador a partir de los bloques de upsample y
+downsample, así como de otras operaciónes.
+- Se entrena la red con los siguientes pasos:
+  - Se evalúa la función de costo y se aplica gradiente descendente.
+  - Se crea una imagen con el generador.
+  - Se compara una imagen con el discriminador.
+  - Se hace el ajuste de pesos entre generador y discriminador.
+
+La arquitectura de la red queda de la siguiente manera:
+
+<div align="center">
+
+**Generador**, basado en una red **U-Net**.
+
+<img src="./imgs/15_generador.png" alt="./imgs/15_generador.png"/>
+
+<br/><br/>
+
+**Discriminador**, basado en una red **PatchGAN**.
+
+<img src="./imgs/16_discriminador.png" alt="./imgs/16_discriminador.png"/>
+
+<br/><br/>
+</div>
 
 ### Requerimientos
 
