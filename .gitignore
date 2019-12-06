@@ -11,3 +11,12 @@ video*
 model.png
 logs
 training_checkpoints
+
+# LaTex
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.tex~
